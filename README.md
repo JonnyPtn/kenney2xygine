@@ -1,4 +1,4 @@
 # kenney2xygine
 
-Convert [kenney](kenney.nl) xml sprite sheets to [xygine](github.com/fallahn/xygine) sprite sheet format
+Convert [kenney](https://www.kenney.nl) xml sprite sheets to [xygine](https://github.com/fallahn/xygine) sprite sheet format
 
