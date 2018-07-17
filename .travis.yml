@@ -1,20 +1,25 @@
 language: go
-
 env:
- - GOOS=linux GOARCH=amd64
- - GOOS=darwin GOARCH=amd64
- - GOOS=windows GOARCH=amd64
+  global:
+    - BUILD_GOARCH=amd64
+  matrix:
+    - BUILD_GOOS=linux
+    - BUILD_GOOS=darwin
+    - BUILD_GOOS=windows
+
+script: 
+- env GOOS=$BUILD_GOOS GOARCH=$BUILD_GOARCH go build
+- if [[ "$BUILD_GOOS" == "windows" ]]; then zip "kenney2xygine-$BUILD_GOOS" kenney2xygine.exe; fi
+- if [[ "$BUILD_GOOS" != "windows" ]]; then zip "kenney2xygine-$BUILD_GOOS" kenney2xygine; fi
 
 deploy:
   provider: releases
   api_key:
-    secure: QXXzmYECNj059cmvLbBTnjlNpIwJhbXlppmlmwpknz2/LBLWJiL4xUHVz61if06TmhPJwakxVwN+JqPsD3rWERpdo63foelvduEflO6Gdx8eEwbmMA3nWNXwy8mllBkq7vy1dYdP1x/SmW6o1Q8PuwgqQa+QArV5GI5k6KxF4oo1tRwiZQ58gr11DliQ0pUmSa8qYsaEppD6YOoEIztjVLKAGh/2i0o2r8pVLIT7dkbuEoTfhtxgLYxP9rIdv/g6nyQz6BVQAcPj3gMkgKfHfR8d1T7YTXYHt9mPhwW+a1HO5tzkXfkPQWElG/zyl2/UzUJMPsS6vl5lmw/zcPozT1SYCyuArp1bh14FMmuEI4t1W97NwDVHl9RdAI7zfssQKtWcJvSZR+lyO6Mau6GY69PmUMKoQTluwFrBFpf0SCYzhYUfqlq3USR2BPj8Dg1uDDEo7HfvsoqgNYR4rn55dEdzuuYGSPJM47hedvLwpRupXHoGvmn3cjU54cP2vDQAWptQXbT7S9nGvK+1M9E9U7RIa5eeIb3MM8PYycEq9ySy37+Wx8xpXQP5dATcjkZEoYC7u2w3nn7pHDDXoeLzIN8ad4SrO7mYMVdSQaCEdYPiiasSKpx2zWjEe4PlV2tSSuU0c4LUl3PHsfp3zCOKndaFwSaWXW1EnOU7/UAvzdI=
-  file_glob: true
-  file: kenney2json.*
+    secure: N2OhIZBrB7YYBAY6M3S1Vq5HXd5rk1HcDNinJEaHQ03huHrOrwNvJAA0EKgpdl/jPuTTw+fJOgK+vRYgIZt2oafs5s/GxaUZEZuXEnntrQtXLgoqveFC84UYURQackZ3T99fR7/ewDIw1qdOWK6qPwsw/KyKtMr5y5xaFN+NjzRAs+7NbDYbW5ZnJ1LUTZE0Txlw0VEmzjJZpC+Lhi0sDdYIYL20YTTbDRfhNISU5MRjE1yrMx6UILGAXhLai28OlpTwcAvFTIio8rLpVCVcPkSORqnC7JZtOr9Tr0ZumusB1GUJDbUTUtbCOqrbDpZypGzt8DqW8S/mjCNieukJXaCzPctC9OZp5iLPk8HyLG1FgqazsdIBE8+LxP3zwAejak1UaBV8yatWQ6pf80QIy1hsjE0BE3ECcPIpNZXzS594ARZwbMwtuv0QHoeVmnfmjbbRK6NDHDYt/vzdfHrtPflok5/J7M1v7nEii3dbYZXPFvoE4kwHAC4b8Czg55W9d1yrb6/KNgtg8IUz5+eEZguf4fYGu+Sa8K/X57Pky3rYtIkaEoRsYZn+Hm84P1yKHQp4wBSR7a0TrpY+dzObvVRpFUuldJVjWwSnDAAUcaYgBCpG+J6b6Ym0f7p1FpLGgSB+IcixzXhXT0Wsm6QkwIJoRuDjrdh3JlCy8pP++bM=
+  file: kenney2xygine-$BUILD_GOOS.zip
+  on:
+    repo: JonnyPtn/kenney2xygine
+    tags: true
   overwrite: true
   skip_cleanup: true
   prerelease: true
-  on:
-   tags: true
-
-
